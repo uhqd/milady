@@ -3,6 +3,8 @@ using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
 using System;
 
+
+
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -114,6 +116,7 @@ namespace catchDose
             }
             var response_Doc = JsonConvert.DeserializeObject<DocumentsResponse>(response); // get the list of documents
             var DocTypeList = new List<string>();
+            var docNameList = new List<string>();
             var DateServiceList = new List<DateTime>();
             List<int> DocIndexList = new List<int>();
             var PatNameList = new List<string>();
@@ -230,14 +233,17 @@ namespace catchDose
                 #region If not dismissed, add the document to the list
                 if (!sendItToTrash)
                 {
-                  //  if (thisDocType.Contains("Dosimétrie"))
-                   // {
-                        docExtractor docExtractor = new docExtractor(response_docdetails, thisDocType, thisDocName,ctx, indexer);
+                    //  if (thisDocType.Contains("Dosimétrie"))
+                    // {
+                    docExtractor docExtractor = new docExtractor(response_docdetails, thisDocType, thisDocName, ctx, indexer);
 
+                   if (thisDocType.Contains("Dosimétrie") || thisDocType.Contains("Fiche de positionnement"))
+                        docNameList.Add(thisDocName);
 
-                        DateServiceList.Add(dtDateTime);
-                        DocTypeList.Add(thisDocType);
-                        DocIndexList.Add(loopnum);
+                    DateServiceList.Add(dtDateTime);
+                    DocTypeList.Add(thisDocType);
+                    DocIndexList.Add(loopnum);
+                    
                     //}
                 }
                 #endregion
@@ -247,7 +253,13 @@ namespace catchDose
             }
             #endregion
 
-
+            String outmsg = "Ces documents ont été extraits d'Aria Documents:\n\n";
+            foreach(string s in docNameList)
+            {
+                outmsg += " - " +  s + "\n";
+            }
+           
+            System.Windows.MessageBox.Show(outmsg);
 
 
 
@@ -270,7 +282,7 @@ namespace catchDose
         public bool isTheCorrectEclipseReport { get; set; }
         public bool isTheCorrectEclipseReportWrongDate { get; set; }
 
-        public docExtractor(string response_details, string doctype, string docname,ScriptContext _ctx, int indexer)
+        public docExtractor(string response_details, string doctype, string docname, ScriptContext _ctx, int indexer)
         {
             bool typeIsKnown = true;
             string extension = ".pdf";
@@ -279,22 +291,23 @@ namespace catchDose
             else if (doctype.Contains("Fiche de positionnement"))
                 extension = ".docx";
             else
-                typeIsKnown= false;
+                typeIsKnown = false;
 
             if (typeIsKnown)
             {
+               
                 #region Convert response details (string) to a temp PDF file
                 String saveFilePathDir = @"\\srv015\sf_com\simon_lu\milady";
                 saveFilePathDir += @"\" + _ctx.Patient.Id + "_" + _ctx.Patient.LastName;
 
-//                String saveFilePathDir = Directory.GetCurrentDirectory() + @"\" + _ctx.Patient.Id + "_" + _ctx.Patient.LastName;
+                //                String saveFilePathDir = Directory.GetCurrentDirectory() + @"\" + _ctx.Patient.Id + "_" + _ctx.Patient.LastName;
                 if (!Directory.Exists(saveFilePathDir))
                     Directory.CreateDirectory(saveFilePathDir);
 
                 string cleanType = doctype.Trim().Replace(" ", "");
                 string cleanName = docname.Trim().Replace(" ", "");
-                String saveFilePathTemp = saveFilePathDir + @"\" + indexer +"_"+ cleanType+"_"+ cleanName +extension;
-                String saveFilePathTempresponse = saveFilePathDir + @"\" + indexer + "__temp__.txt" ;
+                String saveFilePathTemp = saveFilePathDir + @"\" + indexer + "_" + cleanType + "_" + cleanName + extension;
+                String saveFilePathTempresponse = saveFilePathDir + @"\" + indexer + "__temp__.txt";
 
                 int startBinary = response_details.IndexOf("\"BinaryContent\"") + 17;
                 int endBinary = response_details.IndexOf("\"Certifier\"") - 2;
@@ -302,7 +315,7 @@ namespace catchDose
                 binaryContent2 = binaryContent2.Replace("\\", "");  // the \  makes the string a non valid base64 string                       
                 File.WriteAllBytes(saveFilePathTemp, Convert.FromBase64String(binaryContent2));
 
-              //  File.WriteAllText(saveFilePathTempresponse, response_details);
+                //  File.WriteAllText(saveFilePathTempresponse, response_details);
                 #endregion
 
             }
