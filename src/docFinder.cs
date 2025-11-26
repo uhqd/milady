@@ -244,6 +244,7 @@ namespace catchDose
         }
 
     }
+
     public class docExtractor
     {
         private tomoReportData trda;
