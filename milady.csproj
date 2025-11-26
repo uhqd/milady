@@ -7,7 +7,7 @@
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>catchDose</RootNamespace>
-    <AssemblyName>milady_0025.esapi</AssemblyName>
+    <AssemblyName>milady_0026.esapi</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -41,32 +41,11 @@
     <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>dll\Common.Logging.Core.dll</HintPath>
     </Reference>
-    <Reference Include="itext.io, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>dll\itext.io.dll</HintPath>
-    </Reference>
-    <Reference Include="itext.kernel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>dll\itext.kernel.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>dll\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
-    <Reference Include="MigraDoc.DocumentObjectModel-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>dll\MigraDoc.DocumentObjectModel-gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="MigraDoc.Rendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>dll\MigraDoc.Rendering-gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>dll\MigraDoc.RtfRendering-gdi.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>dll\PdfSharp-gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="PdfSharp.Charting-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>dll\PdfSharp.Charting-gdi.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -95,27 +74,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.Core, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.DocumentLayoutAnalysis, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.DocumentLayoutAnalysis.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.Fonts, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.Fonts.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.Package, Version=0.1.11.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.Package.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.Tokenization, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.Tokenization.dll</HintPath>
-    </Reference>
-    <Reference Include="UglyToad.PdfPig.Tokens, Version=0.1.11.0, Culture=neutral, PublicKeyToken=605d367334e74123, processorArchitecture=MSIL">
-      <HintPath>dll\UglyToad.PdfPig.Tokens.dll</HintPath>
     </Reference>
     <Reference Include="VMS.OIS.ARIALocal.WebServices.Document.Contracts, Version=17.0.5.4, Culture=neutral, PublicKeyToken=269c551a9712e7cc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
