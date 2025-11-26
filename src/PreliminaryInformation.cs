@@ -1,18 +1,8 @@
 ﻿//using PlanCheck.Users;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Windows;
+
 using VMS.TPS.Common.Model.API;
-using VMS.TPS.Common.Model.Types;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
-using System.Runtime.Remoting.Contexts;
-using System.Runtime.InteropServices;
-using System.Text;
 
 
 namespace catchDose

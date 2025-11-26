@@ -1,16 +1,9 @@
 using catchDose;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Forms;
-using VMS.TPS.Common.Model;
-using VMS.TPS.Common.Model.API;
-using VMS.TPS.Common.Model.Types;
+
+
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
 [assembly: AssemblyVersion("1.0.0.1")]
 [assembly: AssemblyFileVersion("1.0.0.1")]
@@ -49,18 +42,25 @@ namespace VMS.TPS
                 return;
             }
 
-          
-
+            
             #endregion
 
 
             PreliminaryInformation pinfo = new PreliminaryInformation(context);
+            /*
+            _ = typeof(UglyToad.PdfPig.PdfDocument);          // PdfSharp
+             _ = typeof(JsonConvert);          // Newtonsoft.Json
 
 
-
-           
-
-
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().OrderBy(a => a.GetName().Name);
+            String msg = string.Empty;
+            foreach (var asm in assemblies)
+            {
+                AssemblyName name = asm.GetName();
+                msg += name.Name + " " + name.Version + "\n";
+            }
+            File.AppendAllText(@"\\srv015\sf_com\simon_lu\assemblies.txt", msg);
+            */
         }
     }
 }
