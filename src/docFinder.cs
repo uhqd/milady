@@ -5,7 +5,7 @@ using System.IO;
 using System.Net;
 using VMS.OIS.ARIAExternal.WebServices.Documents.Contracts;
 using VMS.TPS.Common.Model.API;
-
+using Word = Microsoft.Office.Interop.Word;
 namespace catchDose
 {
     internal class docFinder
@@ -76,14 +76,14 @@ namespace catchDose
         {
 
             #region declaration of variables and deserialize response
-
+            String saveFilePathDir = @"\\srv015\radiophysique\23 DOSIMETRIE  IMPORT_EXPORT\EXPORT";
             DocSettings docSet = DocSettings.ReadSettings();
             ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;
             string apiKeyDoc = docSet.DocKey;
             string hostName = docSet.HostName;
             string port = docSet.Port;
 
-     
+
             var VisitNoteList = new List<string>();
             int visitnoteloc = response.IndexOf("PtVisitNoteId");
             while (visitnoteloc > 0)
@@ -210,17 +210,18 @@ namespace catchDose
                 #region If not dismissed, add the document to the list
                 if (!sendItToTrash)
                 {
-                    
-                    docExtractor docExtractor = new docExtractor(response_docdetails, thisDocType, thisDocName, ctx, indexer);
 
-                   if (thisDocType.Contains("Dosimétrie") || thisDocType.Contains("Fiche de positionnement"))
+                    docExtractor docExtractor = new docExtractor(response_docdetails, thisDocType, thisDocName, ctx, indexer, saveFilePathDir);
+
+                    // if (thisDocType.Contains("Dosimétrie") || thisDocType.Contains("Fiche de positionnement") || thisDocType.Contains("CR de fin de TT"))
+                    if (thisDocType.Contains("Dosimétrie") || thisDocType.Contains("Export Données Patients - Extérieur") || thisDocType.Contains("CR de fin de TT"))
                         docNameList.Add(thisDocName);
 
                     DateServiceList.Add(dtDateTime);
                     DocTypeList.Add(thisDocType);
                     DocIndexList.Add(loopnum);
-                    
-                    
+
+
                 }
                 #endregion
 
@@ -229,12 +230,12 @@ namespace catchDose
             }
             #endregion
 
-            String outmsg = "Ces documents ont été extraits d'Aria Documents:\n\n";
-            foreach(string s in docNameList)
+            String outmsg = "Ces documents ont été extraits d'Aria Documents vers:\n\n" + saveFilePathDir + "\n\n";
+            foreach (string s in docNameList)
             {
-                outmsg += " - " +  s + "\n";
+                outmsg += " - " + s + "\n";
             }
-           
+
             System.Windows.MessageBox.Show(outmsg);
 
 
@@ -252,23 +253,23 @@ namespace catchDose
 
         private string outpath = "";
 
-      
-        public docExtractor(string response_details, string doctype, string docname, ScriptContext _ctx, int indexer)
+
+        public docExtractor(string response_details, string doctype, string docname, ScriptContext _ctx, int indexer, string saveFilePathDir)
         {
             bool typeIsKnown = true;
             string extension = ".pdf";
             if (doctype.Contains("Dosimétrie"))
                 extension = ".pdf";
-            else if (doctype.Contains("Fiche de positionnement"))
+            else if (doctype.Contains("Fiche de positionnement") || doctype.Contains("CR de fin"))
                 extension = ".docx";
             else
                 typeIsKnown = false;
 
             if (typeIsKnown)
             {
-               
+
                 #region Convert response details (string) to a temp PDF file
-                String saveFilePathDir = @"\\srv015\sf_com\simon_lu\milady";
+
                 saveFilePathDir += @"\" + _ctx.Patient.Id + "_" + _ctx.Patient.LastName;
 
                 if (!Directory.Exists(saveFilePathDir))
@@ -285,6 +286,19 @@ namespace catchDose
                 binaryContent2 = binaryContent2.Replace("\\", "");  // the \  makes the string a non valid base64 string                       
                 File.WriteAllBytes(saveFilePathTemp, Convert.FromBase64String(binaryContent2));
 
+                #region convert docx to pdf 
+
+                if (saveFilePathTemp.EndsWith(".docx"))
+                {
+                    try
+                    {
+                        outpath = saveFilePathTemp.Replace(".docx", ".pdf");
+                        ConvertWordToPdf(saveFilePathTemp, outpath);
+                        File.Delete(saveFilePathTemp);
+                    }
+                    catch { }
+                }
+                #endregion
                 #endregion
 
             }
@@ -292,8 +306,25 @@ namespace catchDose
 
 
 
+
+
         }
-        
+        public void ConvertWordToPdf(string inputPath, string outputPath)
+        {
+            var wordApp = new Word.Application();
+            wordApp.Visible = false;
+
+            try
+            {
+                var doc = wordApp.Documents.Open(inputPath);
+                doc.ExportAsFixedFormat(outputPath, Word.WdExportFormat.wdExportFormatPDF);
+                doc.Close();
+            }
+            finally
+            {
+                wordApp.Quit();
+            }
+        }
         bool emptyString(string a)
         {
             bool empty = false;
@@ -304,7 +335,7 @@ namespace catchDose
             return empty;
 
         }
-  
+
     }
     public class tomoReportData
     {
