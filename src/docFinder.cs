@@ -260,7 +260,7 @@ namespace catchDose
             string extension = ".pdf";
             if (doctype.Contains("Dosimétrie"))
                 extension = ".pdf";
-            else if (doctype.Contains("Fiche de positionnement") || doctype.Contains("Export"))
+            else if ( doctype.Contains("Export"))
                 extension = ".docx";
             else
                 typeIsKnown = false;
